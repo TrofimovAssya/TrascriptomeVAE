@@ -86,3 +86,13 @@ def warp(data_x,y_train):
 		biases.append(warp.layers[0].b.get_value())
 	return biases
 
+def gaussian(x):
+    mu = numpy.array([numpy.mean(x[:,i]) for i in xrange(x.shape[1])])
+    cov = numpy.cov(x)
+    return mu,cov
+
+def gaussian_align(data,separator):
+	mu1,cov1 = gaussian(data[:separator,:])
+	mu2,cov2 = gaussian(data2[separator:,:])
+	new_data = data[:separator,:]-mu1+mu2
+	return new_data
